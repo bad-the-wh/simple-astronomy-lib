@@ -19,6 +19,7 @@ def artefactId = ''
 def filePath = ''
 def packaging = ''
 def version = ''
+def pom
 
 // Variable utilisée pour savoir si c'est une RELEASE ou une SNAPSHOT
 def isSnapshot = true
@@ -36,7 +37,7 @@ pipeline {
       stage('Get info from POM') {
           steps {
             script {
-                pom = readMavenPom file: '**/pom.xml'
+                pom = readMavenPom file: 'pom.xml'
                 groupId = pom.groupId
                 artifactId = pom.artifactId
                 packaging = pom.packaging
