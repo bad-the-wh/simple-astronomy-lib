@@ -19,7 +19,6 @@ def artefactId = ''
 def filePath = ''
 def packaging = ''
 def version = ''
-def pom
 
 // Variable utilisée pour savoir si c'est une RELEASE ou une SNAPSHOT
 def isSnapshot = true
@@ -57,6 +56,19 @@ pipeline {
           steps {
               sh 'mvn clean package'
           }
+      }
+
+      stage('Test') {
+           steps {
+              /* `make check` returns non-zero on test failures,
+              * using `true` to allow the Pipeline to continue nonetheless
+              */
+              sh 'make check || true'
+              junit '**/target/*.xml'
+
+              withSonarQubeEnv(credentialsId: 'f225455e-ea59-40fa-8af7-08176e86507a', installationName: 'My SonarQube Server') { // You can override the credential to be used
+                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+           }
       }
 
       /*
