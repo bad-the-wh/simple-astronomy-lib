@@ -100,7 +100,7 @@ public class MoonPhaseFinder {
      * which break the binary search.
      *
      * @param cal         the calendar date for which to compute the moon position
-     * @param moonFinder  the NewMoon or FullMoon checker
+     * @param finder  the NewMoon or FullMoon checker
      * @return the forward date which passes the given bounds provided
      */
     private static ZonedDateTime findRoundedDatePassingBounds(ZonedDateTime cal, MoonFinder finder) {
