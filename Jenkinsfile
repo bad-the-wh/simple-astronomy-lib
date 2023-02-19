@@ -1,7 +1,19 @@
 pipeline {
     agent any
 
+    tools {
+        maven 'MAVEN'
+    }
+
     stages {
+        stage('Build MAVEN') {
+            steps{
+                checkout([$class: 'GtSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs:[[credentialsId: 'BAD', url: 'https://github.com/bad-the-wh/simple-astronomy-lib']]])
+
+                sh "mvn -Dmaven.test.failure.ignore = true clean package"
+
+            }
+        }
         stage('Build') {
             steps {
                 sh 'make'
