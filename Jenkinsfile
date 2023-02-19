@@ -12,7 +12,7 @@ pipeline {
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs:[[credentialsId: 'BAD', url: 'https://github.com/bad-the-wh/simple-astronomy-lib']]])
 
-                sh 'mvn clean package'
+                //sh 'mvn clean package'
 
             }
         }
