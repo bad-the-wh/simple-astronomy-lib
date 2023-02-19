@@ -1,37 +1,15 @@
 pipeline {
-    agent any
-
-    tools {
-        maven 'MVN'
+    agent {
+        docker {
+            image 'maven:3.9.0-eclipse-temurin-11'
+            args '-v /root/.m2:/root/.m2'
+        }
     }
-
     stages {
-        stage('Build MAVEN') {
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs:[[credentialsId: 'BAD', url: 'https://github.com/bad-the-wh/simple-astronomy-lib']]])
-
-                sh "mvn clean package"
-
-                archiveArtifacts artifacts: '**/*.jar', fingerprint: true
-
-            }
-        }
-
-        stage('Test') {
+        stage('Build') {
             steps {
-                sh 'make check || true'
-                junit '**/target/*.xml'
+                sh 'mvn -B -DskipTests clean package'
             }
-        }
-        stage('Deploy') {
-            when {
-                expression {
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                }
-            }
-                steps {
-                    sh 'make publish'
-                }
         }
     }
 }
