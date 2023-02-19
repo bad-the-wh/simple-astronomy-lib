@@ -10,7 +10,6 @@ pipeline {
             steps{
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs:[[credentialsId: 'BAD', url: 'https://github.com/bad-the-wh/simple-astronomy-lib']]])
 
-                sh "mvn -Dmaven.test.failure.ignore = true clean package"
 
             }
         }
