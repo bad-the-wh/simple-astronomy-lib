@@ -1,11 +1,5 @@
 pipeline {
-    agent {
-
-        def server = Artifactory.server "SERVER_ID"
-        def rtMaven = Artifactory.newMavenBuild()
-        def buildInfo
-
-    }
+    agent any
 
     tools {
         maven 'MVN'
