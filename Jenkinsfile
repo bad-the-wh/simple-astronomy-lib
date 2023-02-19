@@ -30,13 +30,13 @@ pipeline {
 	  // Le checkout n'est pas obligatoire si Jenkins est configuré en mode pipeline from SCM puisqu'il le fait déjà pour récupérer le Jenkinsfile
       stage('Checkout') {
          steps {
-            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/fhoubart/demo-cicd.git']]])
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/bad-the-wh/simple-astronomy-lib.git']]])
          }
       }
       stage('Get info from POM') {
           steps {
             script {
-                pom = readMavenPom file: 'pom.xml'
+                pom = readMavenPom file: '**/pom.xml'
                 groupId = pom.groupId
                 artifactId = pom.artifactId
                 packaging = pom.packaging
